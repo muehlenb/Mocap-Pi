@@ -48,6 +48,10 @@ Additional utilities and experimental projects:
 - **DummyMarkerSender:** Sends recorded or synthetic marker data from virtual cameras to the main application via the network interface.
 - **UnrealDataCapturer:** An **Unreal Engine 5.3** project for simulating and exporting motion capture scenes with configurable camera setups and marker trajectories. Virtual cameras can be placed freely in the scene, while marker components can be attached to moving actors or skeletal bones. This enables rapid, low-cost prototyping and evaluation of different motion capture scenarios.
 
+## Setup Instructions
+TODO
+- Short reference
+
 ## Current Limitations
 
 Mocap-Pi currently focuses on **rigid-body tracking** and does not provide built-in skeletal or full-body tracking.
