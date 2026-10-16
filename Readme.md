@@ -31,21 +31,21 @@ The system is designed for applications such as **extended reality (XR), robotic
 
 ![Overview over the software packages](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-general.png)
 
-### `/app`
+### `/app` - Main Application [(Readme.md)](/app)
 The main application, running on a host computer with a graphical user interface (GUI). It provides network communication, temporal marker synchronization, 3D triangulation, and rigid-body matching and tracking.
 
 The framework also includes a user-friendly camera calibration workflow with visual feedback, combining approximate initialization with a two-stage bundle adjustment procedure.
 
-### `/cam`
+### `/cam` - Camera Application [(Readme.md)](/cam)
 Raspberry Pi camera software responsible for image acquisition, on-device IR marker segmentation, and wireless transmission of detected markers to the main application.
 
-### `/pub`
+### `/pub` -  Publication [(Readme.md)](/pub)
 Supplementary materials and scripts for reproducing the measurements and evaluations presented in our publications, including MIG '26.
 
-### `/utils`
-Additional utilities and experimental projects:
+### `/utils` - Utility [(Readme.md)](/utils)
+Additional utilities:
 
-- **DummyMarkerSender:** Sends recorded or synthetic marker data from virtual cameras to the main application via the network interface.
+- **DummyMarkerSender:** Sends recorded or synthetic marker data from multiple (possibly virtual) cameras to the main application via the network interface.
 - **UnrealDataCapturer:** An **Unreal Engine 5.3** project for simulating and exporting motion capture scenes with configurable camera setups and marker trajectories. Virtual cameras can be placed freely in the scene, while marker components can be attached to moving actors or skeletal bones. This enables rapid, low-cost prototyping and evaluation of different motion capture scenarios.
 
 ## Setup Instructions
