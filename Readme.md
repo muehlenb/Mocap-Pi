@@ -29,9 +29,7 @@ The system is designed for applications such as **extended reality (XR), robotic
 
 ## Repository Overview
 
-![img/software-general.png](Overview over the software packages)
-
-[TODO] OVERVIEW PLOT
+![Overview over the software packages](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-general.png)
 
 ### `/app`
 The main application, running on a host computer with a graphical user interface (GUI). It provides network communication, temporal marker synchronization, 3D triangulation, and rigid-body matching and tracking.
