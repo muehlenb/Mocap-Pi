@@ -29,6 +29,8 @@ The system is designed for applications such as **extended reality (XR), robotic
 
 ## Repository Overview
 
+![img/software-general.png](Overview over the software packages)
+
 [TODO] OVERVIEW PLOT
 
 ### `/app`
