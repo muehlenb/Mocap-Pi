@@ -50,7 +50,9 @@ Additional utilities and experimental projects:
 
 ## Setup Instructions
 TODO
-- Short reference
+- Camera 3D Print STL Files (A separated markdown for building the camera modules).
+- Setup Cameras (especially WiFi, prebuild Image should have a standartized WIFI SSID + Password) (Reference to the Readme.md there).
+- Setup Main Application (Reference to the Readme.md there)
 
 ## Current Limitations
 
