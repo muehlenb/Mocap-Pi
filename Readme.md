@@ -62,13 +62,10 @@ To build your own camera node, the following hardware components are required:
 
 #### 3D-Printed Enclosure
 
-The enclosure used in our setup is available as STL files for 3D printing:
+The enclosure used in our setup is available as STL files for 3D printing (**Back cover:** [bottom.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/bottom.stl), **Front cover:** [top.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/top.stl), **IR filter mount:** [filter.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/filter.stl)):
 
-![Camera Case STL Files](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/stl-files.png)
+![Camera Case STL Files](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/stl-files2.png)
 
-- **Front cover:** [top.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/top.stl)
-- **Back cover:** [bottom.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/bottom.stl)
-- **IR filter mount:** [filter.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/filter.stl)
 
 **Note:** The IR filter mount is currently attached to the enclosure using adhesive. Depending on the dimensions of your IR filter, the mount may need to be adjusted. Our setup uses an IR filter measuring approximately 8 × 8 mm.
 
