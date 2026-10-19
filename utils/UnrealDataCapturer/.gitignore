@@ -1,9 +1,19 @@
+# Visual Studio
 .vs/
-recordings*
-Binaries/*
-Plugins/**/Binaries/*
-Build/*
-Saved/*
-Intermediate/*
-Plugins/**/Intermediate/
-DerivedDataCache/*
+
+# Recordings
+recordings/
+
+# Unreal Engine generated files
+/Binaries/
+/Build/
+/Saved/
+/Intermediate/
+/DerivedDataCache/
+
+# Plugin generated files
+/Plugins/**/Binaries/
+/Plugins/**/Intermediate/
+
+# Generated level data
+/Content/Main_BuiltData.uasset
