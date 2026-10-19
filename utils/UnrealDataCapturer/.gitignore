@@ -1,0 +1,9 @@
+.vs/
+recordings*
+Binaries/*
+Plugins/**/Binaries/*
+Build/*
+Saved/*
+Intermediate/*
+Plugins/**/Intermediate/
+DerivedDataCache/*
