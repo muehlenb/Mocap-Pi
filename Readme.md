@@ -59,7 +59,7 @@ To build your own camera node, the following hardware components are required:
 - 850 nm IR bandpass filter (e.g., available on Alibaba)
 - Micro-USB power supply and microSDHC card
 - Mounting screws and nuts (4x M2 × 10 mm, 4x M1.6 × 10 mm)
-- Jumper wires
+- Jumper wires (for IR LEDs)
 
 #### 3D-Printed Enclosure
 
@@ -68,7 +68,7 @@ The enclosure used in our setup is available as STL files for 3D printing (**Bac
 ![Camera Case STL Files](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/stl-files2.png)
 
 
-**Note:** The IR filter mount is currently attached to the enclosure using adhesive. The Raspberry Pi is secured using four M2 × 10 mm screws and nuts, while the camera is mounted using four M1.6 × 10 mm screws and nuts. To prevent the nuts from loosening over time, self-locking nuts or a suitable threadlocker can be used. Although the outer enclosure includes threaded screw holes, additional screws were not necessary due to the secure snap-fit design of the housing. Depending on the dimensions of your IR filter, the mount may need to be adjusted. Our setup uses an IR filter measuring approximately 8 × 8 mm.
+**Note:** The IR filter mount is currently attached to the enclosure using adhesive. The Raspberry Pi is secured using four M2 × 10 mm screws and nuts, while the camera is mounted using four M1.6 × 10 mm screws and nuts. To prevent the nuts from loosening over time, self-locking nuts or a suitable threadlocker can be used. Although the outer enclosure includes threaded screw holes, additional screws were not required, as the housing components fit snugly together. Depending on the dimensions of your IR filter, the mount may need to be adjusted. Our setup uses an IR filter measuring approximately 8 × 8 mm.
 
 Standard jumper wires can be used to connect the IR LEDs to the Raspberry Pi's 5V power supply (soldered). However, you should consider the usage of appropriate resistors depending on the IR LED specifications. 
 For instructions on installing and configuring the camera node software, please refer to the [Camera Application README](/cam).
