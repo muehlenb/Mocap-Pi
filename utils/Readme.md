@@ -25,3 +25,5 @@ To select which elements are included in the simulation, **disable** `Actor Hidd
 Recording starts automatically when the level is launched. Each active camera exports its marker data to a separate `[ID].txt` file in the `recordings` directory, where `[ID]` corresponds to the camera's unique identifier.
 
 The generated `recordings` directory can be saved and used as the source folder for **`DummyMarkerSender`** to stream the recorded marker data into the Mocap-Pi main application.
+
+**Note:** Before using other recordings, you must first record the calibration wand with your camera setup and perform camera calibration in the Mocap-Pi main application using the recorded data. This ensures that subsequent recordings can be processed correctly.
