@@ -19,8 +19,6 @@ The system is designed for applications such as **extended reality (XR), robotic
 | **Camera Hardware** | Raspberry Pi Camera Module 3 NoIR |
 | **Processing Hardware** | Raspberry Pi Zero 2 W |
 | **Camera Frame Rate** | 60 FPS (up to 85 FPS with cooling) |
-| **Architecture** | Wireless, distributed camera processing |
-| **Software** | Open-source tracking, calibration, UI, and camera firmware |
 | **License** | MIT |
 
 **¹ Tracking accuracy:** Based on a 12-camera setup with a capture area of approximately 1–4 m². For more details, see our publication (below). Tracking error depends on motion speed, capture area, and application conditions. Slower motion and smaller capture areas generally yield better results.
@@ -49,10 +47,38 @@ Additional utilities:
 - **UnrealDataCapturer:** An **Unreal Engine 5.3** project for simulating and exporting motion capture scenes with configurable camera setups and marker trajectories. Virtual cameras can be placed freely in the scene, while marker components can be attached to moving actors or skeletal bones. This enables rapid, low-cost prototyping and evaluation of different motion capture scenarios.
 
 ## Setup Instructions
-TODO
-- Camera 3D Print STL Files (A separated markdown for building the camera modules).
-- Setup Cameras (especially WiFi, prebuild Image should have a standartized WIFI SSID + Password) (Reference to the Readme.md there).
-- Setup Main Application (Reference to the Readme.md there)
+
+### Camera Node
+
+To build your own camera node, the following hardware components are required:
+
+- Raspberry Pi Zero 2 W
+- Raspberry Pi Camera Module 3 NoIR
+- Raspberry Pi Zero Camera Flex Cable
+- HIR 204/H0 850 nm infrared (IR) LEDs (e.g., 6 LEDs)
+- 850 nm IR bandpass filter (e.g., available on Alibaba)
+- Micro-USB power supply and microSDHC card
+- Jumper wires and mounting screws
+
+#### 3D-Printed Enclosure
+
+The enclosure used in our setup is available as STL files for 3D printing:
+
+![Camera Case STL Files](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/stl-files.png)
+
+- **Front cover:** [top.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/top.stl)
+- **Back cover:** [bottom.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/bottom.stl)
+- **IR filter mount:** [filter.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/filter.stl)
+
+**Note:** The IR filter mount is currently attached to the enclosure using adhesive. Depending on the dimensions of your IR filter, the mount may need to be adjusted. Our setup uses an IR filter measuring approximately 8 × 8 mm.
+
+Standard jumper wires can be used to connect the IR LEDs to the Raspberry Pi's 5V power supply. However, you should consider the usage of appropriate resistors depending on the IR LED specifications. 
+For instructions on installing and configuring the camera node software, please refer to the [Camera Application README](/cam).
+
+
+### Main Application
+For instructions on setting up and running the system, please refer to the [Main Application README](/app).
+
 
 ## Current Limitations
 
