@@ -89,8 +89,8 @@ The original project was privately initiated by Janis Rosskamp and Andre Muehlen
 ## Publications
 - Andre Muehlenbrock, Janis Rosskamp, and Gabriel Zachmann. 2026. Mocap-Pi: An Open-Source Real-Time Motion Capture System Using Wireless Optical Cameras. In The 19th ACM SIGGRAPH Conference on Motion, Interaction, and Games (MIG ’26), December 11–13, 2026, Charleston, SC, USA. ACM, New
 York, NY, USA, 7 pages. https://doi.org/10.1145/3828647.3857294
-  - [TODO] Paper | Supplemental Material  
-  - [TODO] Video
+  - [Paper](https://cgvr.cs.uni-bremen.de/papers/mig2026/Mocap-Pi-Paper.pdf) | [Supplemental Material](https://cgvr.cs.uni-bremen.de/papers/mig2026/Mocap-Pi-Supplemental.pdf)
+  - [Video](https://cgvr.cs.uni-bremen.de/papers/mig2026/Mocap-Pi-Video.mp4)
 
 Please cite:
 
