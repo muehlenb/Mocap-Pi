@@ -3,7 +3,7 @@ This directory contains the camera application of the **Mocap-Pi** framework tha
 
 ![Camera Software Class Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-camera.png)
 
-For an overview of the project, including the **camera software/firmware**, **additional utilities**, and related publications, please refer to the [repository root](https://github.com/muehlenb/Mocap-Pi).
+For an overview of the project, including the **main application**, **additional utilities**, and related publications, please refer to the [repository root](https://github.com/muehlenb/Mocap-Pi).
 
 ## Dependencies
 To build the C++ project, you require a **C++ compiler**, at least **CMake 3.12**, and the following dependencies:
