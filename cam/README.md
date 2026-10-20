@@ -1,30 +1,56 @@
 # Mocap-Pi: Camera Application
-This directory contains the camera application of the **Mocap-Pi** framework that is intended to run on the Raspberry Pi Zero 2 W with the Raspberry Camera Module 3 NoIR.
+
+This directory contains the **Mocap-Pi** camera application, designed for the Raspberry Pi Zero 2 W with the Raspberry Pi Camera Module 3 NoIR.
 
 ![Camera Software Class Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-camera.png)
 
-For an overview of the project, including the **main application**, **additional utilities**, and related publications, please refer to the [repository root](https://github.com/muehlenb/Mocap-Pi).
+For the **main application**, **additional utilities**, and related publications, see the [repository root](https://github.com/muehlenb/Mocap-Pi).
 
 ## Dependencies
-To build the C++ project, you require a **C++ compiler**, at least **CMake 3.12**, and the following dependencies:
+
+Building the C++ application requires a **C++ compiler**, **CMake ≥ 3.12**, and the following dependencies:
 
 - **Boost:** Network communication
-- **OpenMP:** Parallel execution in for loops. 
+- **OpenMP:** Parallel loop execution
 
-On the Raspberry Pi OS Lite, the required dependencies can be installed using:
+On Raspberry Pi OS Lite, install Boost using:
+
 ```bash
 sudo apt install libboost-dev
 ```
 
-## Pre-Build Image
-To allow a fast start, we provide a ready-to-run image that can be put onto an MicroSDHC card, based on the Raspberry Pi OS Lite system.
+## Pre-Built Image
 
-- [Download Mocap-Pi Image](https://github.com/muehlenb/Mocap-Pi/releases)
+A ready-to-use image based on **Raspberry Pi OS 12 Lite** is available for quick setup.
 
-This image is configured to start the camera application on startup.
-Please note that in this image, the camera expects the following network configuration:
+### Installation
+
+1. Download the [Mocap-Pi image](https://github.com/muehlenb/Mocap-Pi/releases).
+2. Flash it to a microSD card using [Raspberry Pi Imager](https://www.raspberrypi.com/software/).
+3. Insert the card into the Raspberry Pi Zero 2 W with the Camera Module 3 NoIR connected.
+4. Power on the Raspberry Pi.
+
+The camera application starts automatically on boot. The image uses the following default Wi-Fi credentials:
+
 - **SSID:** `MocapPi`
 - **Password:** `1100407111719631`
 
-**Note:** This configuration can be used for initial testing (when configuring your Wifi Router accordingly), but you should replace the default SSID and password with your own. To do so, flash the image onto a microSDHC card and boot a Raspberry Pi Zero 2 W connected to a monitor and keyboard. Adjust the Wi-Fi settings to match your network, then create a new image from the modified card and flash it onto the microSDHC cards of the remaining Raspberry Pi Zero 2 W devices. 
+*The Raspberry Pi Zero 2 W supports only 2.4 GHz Wi-Fi. Ensure your router or hotspot uses this band if connection issues occur.*
 
+### Updating Wi-Fi Settings
+
+For initial testing, you can use the default credentials with a router or a Windows Mobile Hotspot. To configure your own network, access the Raspberry Pi via SSH or a connected keyboard and run:
+
+```bash
+sudo raspi-config
+```
+
+Select the first menu option twice, then enter your Wi-Fi credentials.
+
+To create a reusable image with the updated settings, connect a USB drive or use a network folder and run:
+
+```bash
+sudo image-backup
+```
+
+Specify the destination path for the image backup. The resulting image can be flashed to other microSD cards using **Raspberry Pi Imager**, preserving your custom Wi-Fi settings.
