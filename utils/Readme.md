@@ -1,4 +1,17 @@
 # Mocap-Pi: Utils
+## DummyMarkerSender
+
+Streams recorded or synthetic marker data from multiple cameras to the main application over the network.
+
+To use recorded data, place all camera recordings in one folder, named either `[ID].txt` or `camera_[ID].txt` (consistent across all files). IDs do not need to be sequential and typically correspond to the last octet of the camera's IPv4 address.
+
+Start streaming with:
+
+```bash
+DummyMarkerSender --folder [PathToFolder]
+```
+
+**Note:** This application is intended to run on the same computer as the main application. To view the streamed data, select the loopback interface (`127.0.0.1`) in the main application's **Network** tab.
 
 ## UnrealDataCapturer
 
