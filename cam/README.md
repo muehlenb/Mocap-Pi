@@ -26,5 +26,5 @@ Please note that in this image, the camera expects the following network configu
 - **SSID:** `MocapPi`
 - **Password:** `1100407111719631`
 
-**Note:** This configuration can be used for initial testing, but you should replace the default SSID and password with your own. To do so, flash the image onto a microSDHC card and boot a Raspberry Pi Zero 2 W connected to a monitor and keyboard. Adjust the Wi-Fi settings to match your network, then create a new image from the modified card and flash it onto the microSDHC cards of the remaining Raspberry Pi Zero 2 W devices. 
+**Note:** This configuration can be used for initial testing (when configuring your Wifi Router accordingly), but you should replace the default SSID and password with your own. To do so, flash the image onto a microSDHC card and boot a Raspberry Pi Zero 2 W connected to a monitor and keyboard. Adjust the Wi-Fi settings to match your network, then create a new image from the modified card and flash it onto the microSDHC cards of the remaining Raspberry Pi Zero 2 W devices. 
 
