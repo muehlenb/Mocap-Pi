@@ -1,0 +1,14 @@
+[Unit]
+Description=MocapCam
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=mocappi
+ExecStart=/home/mocappi/mocapcam/MocapCam
+StandardError=append:/home/mocappi/mocapcam/error.log
+
+[Install]
+WantedBy=multi-user.target
