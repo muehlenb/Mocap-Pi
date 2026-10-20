@@ -21,7 +21,7 @@ The system is designed for applications such as **extended reality (XR), robotic
 | **Camera Frame Rate** | 60 FPS (up to 85 FPS with cooling) |
 | **License** | MIT |
 
-**¹ Tracking accuracy:** Based on a 12-camera setup with a capture area of approximately 1–4 m². For more details, see our publication (below). Tracking error depends on motion speed, capture area, and application conditions. Slower motion and smaller capture areas generally yield better results.
+**¹ Tracking accuracy:** Based on a 12-camera setup with a capture area of approximately 1–4 m². For more details, see our publication (below). Tracking error depends on motion speed, capture area, and application conditions. Slower motion and smaller capture areas generally yield better results. At higher motion speeds and at the border of the capture volume, rigid body detection may become less reliable.
 
 **² Latency:** Configurable depending on system settings. Typical processing stages include (1) ~21 ms: Camera capture and image buffer availability (2) ~12 ms: On-device IR marker segmentation (3) A few milliseconds: Wireless network transmission (4) ~16 ms: Temporal synchronization buffer at 60 Hz camera frequency. Actual end-to-end latency depends on network conditions, synchronization settings, and application processing.
 

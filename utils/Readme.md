@@ -21,7 +21,7 @@ An **Unreal Engine 5.3** project for simulating and exporting motion capture dat
 
 ### Camera Configuration
 
-The main component is **`MarkerDetectorCamera.h`**, with 10 camera instances already placed in the default startup level. Each camera requires a **unique ID** in its settings and should be positioned and oriented appropriately for the desired recording scenario.
+The main actor/class is **`MarkerDetectorCamera.h`**, with 10 camera instances already placed in the default startup level. Each camera requires a **unique ID** in its settings and should be positioned and oriented appropriately for the desired recording scenario.
 
 ### Scene Configuration
 
