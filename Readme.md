@@ -4,6 +4,8 @@
 
 **Open-Source Real-Time Motion Capture Using Wireless Raspberry Pi Cameras**
 
+![Project Teaser Image](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/teaser3.png)
+
 Mocap-Pi is an open-source optical motion capture system designed for **real-time 6DoF rigid-body tracking** using passive infrared (IR) markers and low-cost, wireless Raspberry Pi cameras.
 
 The system is designed for applications such as **extended reality (XR), robotics, and precise real-time object tracking**, providing millimeter-level positional accuracy with affordable hardware.
