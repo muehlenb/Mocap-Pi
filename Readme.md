@@ -1,5 +1,3 @@
-**Development Status:** Mocap-Pi is currently being prepared for its initial public release. Source code, documentation, and setup instructions are expected to become fully available in the first half of November 2026.
-
 # Mocap-Pi
 
 **Open-Source Real-Time Motion Capture Using Wireless Raspberry Pi Cameras**
