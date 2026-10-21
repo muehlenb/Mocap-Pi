@@ -10,7 +10,7 @@ Mocap-Pi is an open-source optical motion capture system designed for **real-tim
 
 The system is designed for applications such as **extended reality (XR), robotics, and precise real-time object tracking**, providing millimeter-level positional accuracy with affordable hardware.
 
-[Pre-built binaries](https://github.com/muehlenb/Mocap-Pi/releases) and preconfigured [Raspberry Pi OS images](https://github.com/muehlenb/Mocap-Pi/releases) are available for quick and easy deployment on the [Releases page](https://github.com/muehlenb/Mocap-Pi/releases).
+[Pre-built binaries](https://github.com/muehlenb/Mocap-Pi/releases) and preconfigured [Raspberry Pi OS images](https://github.com/muehlenb/Mocap-Pi/releases) are available for quick and easy deployment.
 
 ## Key Features
 
