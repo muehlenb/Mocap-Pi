@@ -37,6 +37,8 @@ The camera application starts automatically on boot. The image uses the followin
 
 *The Raspberry Pi Zero 2 W supports only 2.4 GHz Wi-Fi. Ensure your router or hotspot uses this band if connection issues occur.*
 
+**Warning:** The default SSH username and password are `mocappi` and `mocappi`. Always use a private network to prevent unauthorized access. Changing these credentials will disable camera control via the main application.
+
 ### Updating Wi-Fi Settings
 
 For initial testing, you can use the default credentials with a router or a Windows Mobile Hotspot. To configure your own network, access the Raspberry Pi via SSH or a connected keyboard and run:
