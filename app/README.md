@@ -11,7 +11,43 @@ To allow a fast start, we provide prebuild binaries of the software for Windows:
 
 For Linux, please follow the build information below.
 
-## Usage
+## Architecture
+
+### How it works
+
+`main.cpp` loads settings, initializes networking, creates the shared `DataModel`, starts the `ProcessorCollection`, and runs the `View` render loop. Processing runs in a separate thread from rendering.
+
+![Architecture Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-architecture.png)
+
+`DataModel` stores longer-lived objects, while `TickData` represents a single processing step. Processors typically implement the `Processor::process(TickData&)` interface.
+
+The **processors** data flow can be visualized as follows:
+
+![Processor Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-processors.png)
+
+
+### Project structure
+
+```text
+src/
+├── main.cpp             # Application startup and main render loop
+├── model/               # Shared data: cameras, markers, rigid bodies, skeletons
+├── processors/          # Frame-by-frame tracking and calibration pipeline
+│   ├── input/           # Camera data and frame timestamps
+│   ├── calibration/     # Camera calibration
+│   ├── marker/          # 3D triangulation and marker persistence
+│   ├── rigid/           # Rigid-body detection
+│   └── skeleton/        # Skeleton fitting
+├── view/                # GUI and rendering
+└── util/                # Networking, math, OpenGL, settings, helpers
+```
+
+### Where to start reading
+
+Read `main.cpp` → `model/DataModel.h` → `processors/ProcessorCollection.cpp`, then follow individual processors in pipeline order. For UI behavior, start with `view/View.h`.
+
+
+## Software Usage
 
 ### Calibration
 
@@ -27,16 +63,13 @@ Calibration requires a wand equipped with three retroreflective markers at preci
 The calibration wand can be 3D-printed or assembled manually. However, the distances between the markers should be as accurate as possible, ideally within millimeter precision, as inaccuracies directly affect the calibration results.
 
 #### Calibration Procedure
-
-![Calibration Area](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-calibration-menu.png)
-
 **1. Mask Unwanted Markers**
 
 Before starting calibration, ensure that no unwanted markers or reflective objects are visible to the cameras. Reflective surfaces and rigid bodies should be covered or removed from the capture volume.
 
 If some reflections cannot be eliminated (e.g., LEDs from other cameras appearing in the camera images), they can be excluded using the **Mask Areas** tab on the right-hand side:
 
-1. In the **Mask Areas** tab, click **Start Recording** while the calibration wand is outside the capture volume.
+1. In the **Mask Areas** tab on the left menu, click **Start Recording** while the calibration wand is outside the capture volume.
 2. Wait a few seconds to capture unwanted reflections.
 3. Click **Stop Recording** to apply the masks.
 
@@ -121,38 +154,3 @@ To build the C++ project on your own, you require a **C++ compiler**, at least *
 The required dependencies can be installed using **vcpkg**: `vcpkg install opencv pcl ceres[suitesparse] nlohmann-json assimp boost-asio libssh`
 
 This assumes that you configured vcpkg correctly for your platform (e.g., under Windows, set `VCPKG_DEFAULT_TRIPLET` to `x64-windows` in the enviroment variables).
-
-## Architecture
-
-### How it works
-
-`main.cpp` loads settings, initializes networking, creates the shared `DataModel`, starts the `ProcessorCollection`, and runs the `View` render loop. Processing runs in a separate thread from rendering.
-
-![Architecture Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-architecture.png)
-
-`DataModel` stores longer-lived objects, while `TickData` represents a single processing step. Processors typically implement the `Processor::process(TickData&)` interface.
-
-The **processors** data flow can be visualized as follows:
-
-![Processor Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-processors.png)
-
-
-### Project structure
-
-```text
-src/
-├── main.cpp             # Application startup and main render loop
-├── model/               # Shared data: cameras, markers, rigid bodies, skeletons
-├── processors/          # Frame-by-frame tracking and calibration pipeline
-│   ├── input/           # Camera data and frame timestamps
-│   ├── calibration/     # Camera calibration
-│   ├── marker/          # 3D triangulation and marker persistence
-│   ├── rigid/           # Rigid-body detection
-│   └── skeleton/        # Skeleton fitting
-├── view/                # GUI and rendering
-└── util/                # Networking, math, OpenGL, settings, helpers
-```
-
-### Where to start reading
-
-Read `main.cpp` → `model/DataModel.h` → `processors/ProcessorCollection.cpp`, then follow individual processors in pipeline order. For UI behavior, start with `view/View.h`.
