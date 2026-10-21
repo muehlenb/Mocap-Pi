@@ -22,17 +22,40 @@ To build the C++ project, you require a **C++ compiler**, at least **CMake 3.12*
 - **Assimp:** Load Skeleton.
 - **LibSSH:** For connection to Raspberry Pi Cameras (update, status, etc.).
 
-The required dependencies can be installed using **vcpkg**: `vcpkg install opencv pcl ceres[suitesparse] nlohmann-json assimp boost-asio`
+The required dependencies can be installed using **vcpkg**: `vcpkg install opencv pcl ceres[suitesparse] nlohmann-json assimp boost-asio libssh`
 
 This assumes that you configured vcpkg correctly for your platform (e.g., under Windows, set `VCPKG_DEFAULT_TRIPLET` to `x64-windows` in the enviroment variables).
 
 ## 3. Architecture
-**[TODO]: This part is not fully up-to-date anymore. Explain more precisely the Difference between DataModel (persistent over frames) and TickData (just used during processing a single host-frame)**
 
-[TODO] Also explain how the initial TICK is triggered, which modules exists and how to add new modules.
+### How it works
 
-The classes of this software project are generally structured in:
-- **Model:** Classes that store information, e.g. the Camera calibration, 2D-Markers, 3D-Markers, Rigid Bodies and Skeletons.
-- **Processors:** These are classes that uses some data from the model as input and writes new data to the model, e.g. the MarkerTriangulator reads 2D-Markers of multiple cameras and writes 3D-Markers in Worldspace as output.
-- **View:** GUI & Rendering classes
-- **Util:** Math classes & OpenGL helpers
+`main.cpp` loads settings, initializes networking, creates the shared `DataModel`, starts the `ProcessorCollection`, and runs the `View` render loop. Processing runs in a separate thread from rendering.
+
+![Architecture Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-architecture.png)
+
+`DataModel` stores longer-lived objects, while `TickData` represents a single processing step. Processors typically implement the `Processor::process(TickData&)` interface.
+
+### Project structure
+
+```text
+src/
+├── main.cpp             # Application startup and main render loop
+├── model/               # Shared data: cameras, markers, rigid bodies, skeletons
+├── processors/          # Frame-by-frame tracking and calibration pipeline
+│   ├── input/           # Camera data and frame timestamps
+│   ├── calibration/     # Camera calibration
+│   ├── marker/          # 3D triangulation and marker persistence
+│   ├── rigid/           # Rigid-body detection
+│   └── skeleton/        # Skeleton fitting
+├── view/                # GUI and rendering
+└── util/                # Networking, math, OpenGL, settings, helpers
+```
+
+The processors are structured as follows:
+
+![Processor Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-processors.png)
+
+### Where to start reading
+
+Read `main.cpp` → `model/DataModel.h` → `processors/ProcessorCollection.cpp`, then follow individual processors in pipeline order. For UI behavior, start with `view/View.h`.
