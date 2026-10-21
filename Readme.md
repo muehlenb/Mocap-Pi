@@ -10,7 +10,7 @@ Mocap-Pi is an open-source optical motion capture system designed for **real-tim
 
 The system is designed for applications such as **extended reality (XR), robotics, and precise real-time object tracking**, providing millimeter-level positional accuracy with affordable hardware.
 
-**[Pre-built binaries](https://github.com/muehlenb/Mocap-Pi/releases)** and preconfigured **[Raspberry Pi OS images](https://github.com/muehlenb/Mocap-Pi/releases)** for out-of-the-box usage are available for quick and easy deployment on the [Releases page](https://github.com/muehlenb/Mocap-Pi/releases).
+[Pre-built binaries](https://github.com/muehlenb/Mocap-Pi/releases) and preconfigured [Raspberry Pi OS images](https://github.com/muehlenb/Mocap-Pi/releases) are available for quick and easy deployment on the [Releases page](https://github.com/muehlenb/Mocap-Pi/releases).
 
 ## Key Features
 
@@ -38,12 +38,12 @@ The main application, running on a host computer with a graphical user interface
 
 The framework also includes a user-friendly camera calibration workflow with visual feedback, combining approximate initialization with a two-stage bundle adjustment procedure.
 
-Please find pre-build binaries on the **[Releases page](https://github.com/muehlenb/Mocap-Pi/releases)**.
+Please find pre-build binaries on the [Releases page](https://github.com/muehlenb/Mocap-Pi/releases).
 
 ### `/cam` - Camera Application [(Readme.md)](/cam)
 Raspberry Pi camera software responsible for image acquisition, on-device IR marker segmentation, and wireless transmission of detected markers to the main application.
 
-Please find a preconfigured Raspberry Pi image that automatically starts streaming marker data on boot on the **[Releases page](https://github.com/muehlenb/Mocap-Pi/releases)**.
+Please find a preconfigured Raspberry Pi image that automatically starts streaming marker data on boot on the [Releases page](https://github.com/muehlenb/Mocap-Pi/releases).
 
 ### `/pub` -  Publication [(Readme.md)](/pub)
 Supplementary materials and scripts for reproducing the measurements and evaluations presented in our publications, including MIG '26.
