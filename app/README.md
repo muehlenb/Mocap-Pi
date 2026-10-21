@@ -113,7 +113,7 @@ After completion:
 
 ![Camera Window](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/camera-window.png)
 
-The camera window provides several controls for adjusting marker detection and camera behavior.
+The camera window provides several controls for adjusting marker detection and camera behavior. However, these controls are rather meant for debugging purposes, since the default configuration should work for most scenarios:
 
 - **Threshold:** Sets the brightness threshold used for marker segmentation. It should be high enough to prevent non-marker regions from being merged with actual markers. 
 
