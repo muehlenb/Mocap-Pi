@@ -36,10 +36,9 @@ Before starting calibration, ensure that no unwanted markers or reflective objec
 
 If some reflections cannot be eliminated (e.g., LEDs from other cameras appearing in the camera images), they can be excluded using the **Mask Areas** tab on the right-hand side:
 
-1. Open the **Mask Areas** tab.
-2. Click **Start Recording** while the calibration wand is outside the capture volume.
-3. Wait a few seconds to capture unwanted reflections.
-4. Click **Stop Recording** to apply the masks.
+1. In the **Mask Areas** tab, click **Start Recording** while the calibration wand is outside the capture volume.
+2. Wait a few seconds to capture unwanted reflections.
+3. Click **Stop Recording** to apply the masks.
 
 The recorded areas will be ignored during calibration.
 
@@ -47,7 +46,7 @@ The recorded areas will be ignored during calibration.
 
 **2. Collect Calibration Observations**
 
-Select the appropriate **Calibration Wand** configuration and start the calibration recording.
+Now click **Start new calibration** and select the appropriate **Calibration Wand** configuration.
 
 Slowly move the wand throughout the entire capture volume, ensuring that its markers are visible to at least two cameras simultaneously. Try to cover as much of the capture volume as possible, including different positions, orientations, and depths.
 
@@ -55,9 +54,10 @@ Slower and smoother movements generally improve calibration accuracy by reducing
 
 Valid calibration paths, consisting of marker observations that can be matched between at least two cameras, are visualized directly in the corresponding camera windows.
 
+![Calibration Paths Good](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-calibration-paths.jpg)
+
 **3. Finalize Calibration**
 
-![Calibration Paths Good](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-calibration-paths.jpg)
 
 Once a sufficient number of corresponding marker observations has been collected across the cameras, click **Finalize!** to start the calibration process.
 
