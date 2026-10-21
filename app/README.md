@@ -15,6 +15,66 @@ For Linux, please follow the build information below.
 
 ### Calibration
 
+Camera calibration is required for accurate **3D marker triangulation** and **rigid body tracking**. This also applies to synthetic recordings generated using the **UnrealDataCapturer**.
+
+#### Calibration Wand
+
+Calibration requires a wand equipped with three retroreflective markers at precisely known distances. By default, two calibration wand configurations are supported, but additional calibration wand definitions can be added at the top of the `CameraCalibrator.cpp`:
+
+- **30 cm wand:** Marker distances of 10 cm and 20 cm.
+- **25.1 cm wand:** Marker distances of 8.9 cm and 16.2 cm. *(This configuration was used for simultaneous calibration with OptiTrack in the evaluation publication)*
+
+The calibration wand can be 3D-printed or assembled manually. However, the distances between the markers should be as accurate as possible, ideally within millimeter precision, as inaccuracies directly affect the calibration results.
+
+#### Calibration Procedure
+
+![Calibration Area](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-calibration-menu.png)
+
+**1. Mask Unwanted Markers**
+
+Before starting calibration, ensure that no unwanted markers or reflective objects are visible to the cameras. Reflective surfaces and rigid bodies should be covered or removed from the capture volume.
+
+If some reflections cannot be eliminated (e.g., LEDs from other cameras appearing in the camera images), they can be excluded using the **Mask Areas** tab on the right-hand side:
+
+1. Open the **Mask Areas** tab.
+2. Click **Start Recording** while the calibration wand is outside the capture volume.
+3. Wait a few seconds to capture unwanted reflections.
+4. Click **Stop Recording** to apply the masks.
+
+The recorded areas will be ignored during calibration.
+
+**Important:** The calibration algorithm expects a maximum of three visible markers per camera, corresponding to the calibration wand. Frames containing additional detected markers are discarded.
+
+**2. Collect Calibration Observations**
+
+Select the appropriate **Calibration Wand** configuration and start the calibration recording.
+
+Slowly move the wand throughout the entire capture volume, ensuring that its markers are visible to at least two cameras simultaneously. Try to cover as much of the capture volume as possible, including different positions, orientations, and depths.
+
+Slower and smoother movements generally improve calibration accuracy by reducing motion-related measurement errors.
+
+Valid calibration paths, consisting of marker observations that can be matched between at least two cameras, are visualized directly in the corresponding camera windows.
+
+**3. Finalize Calibration**
+
+![Calibration Paths Good](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-calibration-paths.jpg)
+
+Once a sufficient number of corresponding marker observations has been collected across the cameras, click **Finalize!** to start the calibration process.
+
+The system performs **Bundle Adjustment** to optimize the camera calibration parameters based on the collected observations.
+
+Depending on the number of cameras and observations, this process may take anywhere from a few seconds to several minutes.
+
+After completion:
+
+- The calibration results and accuracy metrics are displayed.
+- The optimized calibration parameters are automatically saved in the application's execution directory.
+- Saved calibration parameters are automatically loaded the next time the application starts, eliminating the need to repeat calibration for every session.
+
+**Note:** Recalibration is recommended whenever the physical position or orientation of any camera changes, as previously determined calibration parameters may no longer be accurate.
+
+
+
 
 ### Camera Settings
 
@@ -39,7 +99,7 @@ The following controls are available for each detected camera node:
 
 - **Flash:** Updates the camera software on the selected node. The currently running application is stopped, the camera source code from the `/cam` directory in the current build folder is transferred to the node via SSH, and the application is rebuilt directly on the camera node. Once the build is complete, the updated application is started automatically.
 
-- **Log:** Displays the error log of the camera application, allowing remote inspection of potential issues.
+- **Show Log:** Displays the error log of the camera application, allowing remote inspection of potential issues.
 
 - **Start:** Starts the camera application on the selected camera node via SSH.
 
