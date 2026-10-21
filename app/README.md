@@ -36,6 +36,11 @@ This assumes that you configured vcpkg correctly for your platform (e.g., under 
 
 `DataModel` stores longer-lived objects, while `TickData` represents a single processing step. Processors typically implement the `Processor::process(TickData&)` interface.
 
+The processors data flow can be visualized as follows:
+
+![Processor Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-processors.png)
+
+
 ### Project structure
 
 ```text
@@ -51,10 +56,6 @@ src/
 ├── view/                # GUI and rendering
 └── util/                # Networking, math, OpenGL, settings, helpers
 ```
-
-The processors are structured as follows:
-
-![Processor Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-processors.png)
 
 ### Where to start reading
 
