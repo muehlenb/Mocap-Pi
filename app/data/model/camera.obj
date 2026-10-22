@@ -1,6 +1,5 @@
 # Blender v3.2.2 OBJ File: ''
 # www.blender.org
-mtllib camera.mtl
 o Cube.001
 v 0.520000 -0.480000 -1.020000
 v 0.480000 -0.480000 -1.020000

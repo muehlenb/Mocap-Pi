@@ -1,6 +1,5 @@
 # Blender v3.2.2 OBJ File: ''
 # www.blender.org
-mtllib ray.mtl
 o Cube
 v 0.020000 0.019999 30.000004
 v 0.020000 -0.020001 30.000004

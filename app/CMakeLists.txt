@@ -206,7 +206,8 @@ add_executable(MocapFramework ${SOURCES} ${HEADERS} ${RESOURCES} src/pch.cpp)
 target_compile_definitions(MocapFramework PRIVATE UKF_SINGLE_PRECISION)
 
 # IMGUI specific compile definition:
-target_compile_definitions(MocapFramework PUBLIC -DCMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
+#target_compile_definitions(MocapFramework PUBLIC -DCMAKE_SOURCE_DIR="${CMAKE_SOURCE_DIR}")
+target_compile_definitions(MocapFramework PUBLIC -DCMAKE_SOURCE_DIR=".")
 
 # Define the libraries to link against:
 target_link_libraries(MocapFramework PUBLIC imgui glad)
@@ -249,7 +250,21 @@ target_precompile_headers(MocapFramework PRIVATE src/pch.h)
 
 add_custom_command(TARGET MocapFramework POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${CMAKE_SOURCE_DIR}/.../cam"
+        "${CMAKE_SOURCE_DIR}/../cam"
         "$<TARGET_FILE_DIR:MocapFramework>/cam"
+    COMMENT "Copying cam folder to binary directory..."
+)
+
+add_custom_command(TARGET MocapFramework POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/data"
+        "$<TARGET_FILE_DIR:MocapFramework>/data"
+    COMMENT "Copying cam folder to binary directory..."
+)
+
+add_custom_command(TARGET MocapFramework POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/shader"
+        "$<TARGET_FILE_DIR:MocapFramework>/shader"
     COMMENT "Copying cam folder to binary directory..."
 )

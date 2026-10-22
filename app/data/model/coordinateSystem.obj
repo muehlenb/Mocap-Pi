@@ -1,6 +1,5 @@
 # Blender v3.2.2 OBJ File: ''
 # www.blender.org
-mtllib coordinateSystem.mtl
 o Cube
 v 0.050000 0.050000 -0.050000
 v 0.050000 -0.050000 -0.050000

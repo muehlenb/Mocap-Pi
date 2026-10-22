@@ -1,6 +1,5 @@
 # Blender v3.2.2 OBJ File: ''
 # www.blender.org
-mtllib sphere.mtl
 o Sphere
 v 0.000000 0.490393 -0.097545
 v 0.000000 0.461940 -0.191342
