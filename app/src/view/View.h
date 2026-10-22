@@ -407,6 +407,7 @@ public:
             wasChanged = true;
         }
 
+        /*
         if(wasChanged){
             std::cout << "ViewPositionX: " << viewPositionX << std::endl;
             std::cout << "ViewPositionY: " << viewPositionY << std::endl;
@@ -414,7 +415,7 @@ public:
             std::cout << "ViewTargetY: " << viewTarget.y << std::endl;
             std::cout << "ViewTargetZ: " << viewTarget.z << std::endl;
             std::cout << std::endl;
-        }
+        }*/
 
         // If mouse wheel moved, change the view distance to the scene mid point:
         if(ImGui::GetIO().MouseWheel != 0){

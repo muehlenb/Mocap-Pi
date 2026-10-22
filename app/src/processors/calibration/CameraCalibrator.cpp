@@ -80,23 +80,26 @@ void CameraCalibrator::saveCalibration(){
 void CameraCalibrator::loadCalibration(){
     try {
         std::ifstream input_file("calibration.json");
-        nlohmann::json json_to_load;
-        input_file >> json_to_load;
-        std::vector<CameraCalibration> calibs = json_to_load.get<std::vector<CameraCalibration>>();
 
-        for(CameraCalibration& calibration : calibs){
-            if(model.cameras.count(calibration.unique_cam_id) == 0){
-                model.semaphore.acquire();
-                if(model.cameras.count(calibration.unique_cam_id) == 0)
-                    model.cameras.try_emplace(calibration.unique_cam_id);
-                model.semaphore.release();
+        if (!input_file.is_open()) {
+            std::cout << "No stored calibration available. You have to perform a calibration to use the software." << std::endl;
+        } else {
+            nlohmann::json json_to_load;
+            input_file >> json_to_load;
+            std::vector<CameraCalibration> calibs = json_to_load.get<std::vector<CameraCalibration>>();
+
+            for (CameraCalibration& calibration : calibs) {
+                if (model.cameras.count(calibration.unique_cam_id) == 0) {
+                    model.semaphore.acquire();
+                    if (model.cameras.count(calibration.unique_cam_id) == 0)
+                        model.cameras.try_emplace(calibration.unique_cam_id);
+                    model.semaphore.release();
+                }
+
+                model.cameras[calibration.unique_cam_id].calibration = calibration;
             }
-
-            model.cameras[calibration.unique_cam_id].calibration = calibration;
         }
-
-        input_file.close();
-    } catch(nlohmann::json::parse_error& e){
+    } catch (nlohmann::json::parse_error& e) {
         std::cout << e.what() << std::endl;
     } catch (std::runtime_error& e) {
         std::cout << e.what() << std::endl;

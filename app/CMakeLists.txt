@@ -264,6 +264,13 @@ add_custom_command(TARGET MocapFramework POST_BUILD
 
 add_custom_command(TARGET MocapFramework POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/lib/imgui-1.88/misc/fonts"
+        "$<TARGET_FILE_DIR:MocapFramework>/lib/imgui-1.88/misc/fonts"
+    COMMENT "Copying cam folder to binary directory..."
+)
+
+add_custom_command(TARGET MocapFramework POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/shader"
         "$<TARGET_FILE_DIR:MocapFramework>/shader"
     COMMENT "Copying cam folder to binary directory..."

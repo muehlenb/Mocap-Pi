@@ -43,7 +43,7 @@ Raspberry Pi camera software responsible for image acquisition, on-device IR mar
 Please find a preconfigured Raspberry Pi image that automatically starts streaming marker data on boot on the [Releases page](https://github.com/muehlenb/Mocap-Pi/releases).
 
 ### `/pub` -  Publication [(Readme.md)](/pub)
-Supplementary materials and scripts for reproducing the measurements and evaluations presented in our publications, including MIG '26.
+Supplementary materials and recordings of the ACM MIG'26 publication.
 
 ### `/utils` - Utility [(Readme.md)](/utils)
 Additional utilities:
