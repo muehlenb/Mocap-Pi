@@ -49,13 +49,60 @@ Read `main.cpp` → `model/DataModel.h` → `processors/ProcessorCollection.cpp`
 
 ## Software Usage
 
-### Calibration
 
-Camera calibration is required for accurate **3D marker triangulation** and **rigid body tracking**. This also applies to synthetic recordings generated using the **UnrealDataCapturer**.
+### A. Network Configuration
 
-#### Calibration Wand
+In the **Network** pane, select the network interface on which the application should listen for incoming camera data. The correct interface depends on your setup:
 
-Calibration requires a wand equipped with three retroreflective markers at precisely known distances. By default, two calibration wand configurations are supported, but additional calibration wand definitions can be added at the top of the `CameraCalibrator.cpp`:
+- **Simulation:** If you are using the `DummyDataSender`, select the loopback interface (`127.0.0.1`).
+- **Real Cameras:** Select the network interface connected to the same network as your camera nodes.
+
+### B. Define Rigid Bodies
+
+In the **Rigid Bodies** pane, you can define and configure the rigid bodies that the system should detect and track. You can add or remove rigid bodies, rename them, and specify the positions of their markers.
+
+![Rigid Body Definition](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-rigidbody-menu.png)
+
+**Note:** By default, the rigid body definitions used in the ACM MIG '26 evaluation are loaded (*Hand Left*, *Hand Right*, and *Head*).
+
+Any changes to the rigid body definitions are automatically saved when the application closes. The saved definitions are then restored on the next startup.
+
+All definitions are stored in `settings.json`.
+
+### C. Pipeline Settings
+
+The left sidebar allows you to configure the camera frame rate and the processing rate of the main application.
+
+![Pipeline Settings](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-pipeline-settings.png)
+
+- **Cam FPS:** Sets the target frame rate for the camera nodes. The cameras will attempt to maintain this frame rate. Although the Raspberry Pi Zero 2 W can achieve approximately 85 FPS, we recommend staying at or below 60 FPS unless additional cooling is provided.
+
+- **Processing:** Sets the target processing rate of the main application. Camera synchronization, marker triangulation, and rigid body detection are performed at this rate, provided the system can keep up with the computational workload.
+
+- **Delay:** Specifies the photon-to-processing latency, i.e., the time between light reaching the first row of the camera sensor and the corresponding frame data being processed by the pipeline. The optimal value depends on the network conditions and is typically between **0.05 and 0.1 seconds (50–100 ms)**.
+  - **Too low:** Camera frames may not have arrived when the processing pipeline expects them, potentially causing individual cameras to be temporarily excluded from processing.
+  - **Too high:** Frames are buffered longer than necessary, introducing additional latency that may become noticeable in real-time applications.
+
+  *In future versions, this delay may be adjusted automatically based on network quality, measured latencies, and the selected processing rate.*
+
+
+**Note for clarity:** The processing pipeline and camera nodes operate at independent frequencies. Since the cameras are not hardware-synchronized, marker positions are temporally interpolated between camera frames to match the timestamps of the main application's processing pipeline before triangulation. This allows the system to process camera data at a consistent rate, independently of the camera frame rates. For further details, please refer to the paper.
+
+### D. Camera View and 3D View
+In the upper left corner, you can choose between the 2D Camera images and the 3D view. Both viewing modes have additional settings that can be configured directly below the switch
+
+**Camera View**
+
+![Camera View Screenshot](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-camera-views.jpg)
+
+**3D View**
+
+![3D View Screenshot](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-3D-view.jpg)
+
+
+### E. Calibration
+
+Camera calibration is required for accurate **3D marker triangulation** and **rigid body tracking**. This also applies to synthetic recordings generated using the **UnrealDataCapturer**. Calibration requires a wand equipped with three retroreflective markers at precisely known distances. By default, two calibration wand configurations are supported, but additional calibration wand definitions can be added at the top of the `CameraCalibrator.cpp`:
 
 - **30 cm wand:** Marker distances of 10 cm and 20 cm.
 - **25.1 cm wand:** Marker distances of 8.9 cm and 16.2 cm. *(This configuration was used for simultaneous calibration with OptiTrack in the evaluation publication)*
@@ -106,10 +153,7 @@ After completion:
 
 **Note:** Recalibration is recommended whenever the physical position or orientation of any camera changes, as previously determined calibration parameters may no longer be accurate.
 
-
-
-
-### Camera Settings
+### F. Camera Settings
 
 ![Camera Window](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/camera-window.png)
 
