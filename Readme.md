@@ -21,13 +21,11 @@ The system is designed for applications such as **extended reality (XR), robotic
 | **Camera Hardware** | Raspberry Pi Camera Module 3 NoIR |
 | **Processing Hardware** | Raspberry Pi Zero 2 W |
 | **Camera Frame Rate** | 60 FPS (up to 85 FPS with cooling) |
-| **License** | MIT (except for third-party libraries)³ |
 
 **¹ Tracking accuracy:** Based on a 12-camera setup with a capture area of approximately 1–4 m². For more details, see our publication (below). Tracking error depends on motion speed, capture area, and application conditions. Slower motion and smaller capture areas generally yield better results. At higher motion speeds and at the border of the capture volume, rigid body detection may become less reliable.
 
 **² Latency:** Configurable depending on system settings. Typical processing stages include (1) ~21 ms: Camera capture and image buffer availability (2) ~12 ms: On-device IR marker segmentation (3) A few milliseconds: Wireless network transmission (4) ~16 ms: Temporal synchronization buffer at 60 Hz camera frequency. Actual end-to-end latency depends on network conditions, synchronization settings, and application processing.
 
-**³ License:** The source code of this project (`app/src` and `cam/src`) is licensed under the MIT License, except for included third-party libraries (e.g. in `app/lib`), which retain their respective licenses. The corresponding license information can be found in each library's subfolder, e.g., [GLFW 3.3](https://github.com/muehlenb/Mocap-Pi/blob/initial_release/app/lib/glfw-3.3/LICENSE.md).
 ## Repository Overview
 
 ![Overview over the software packages](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-general.png)
