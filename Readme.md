@@ -2,7 +2,7 @@
 
 **Open-Source Real-Time Motion Capture Using Wireless Raspberry Pi Cameras**
 
-![Project Teaser Image](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/teaser3.png)
+![Project Teaser Image](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/teaser3.png)
 
 Mocap-Pi is an open-source optical motion capture system designed for **real-time 6DoF rigid-body tracking** using passive infrared (IR) markers and low-cost, wireless Raspberry Pi cameras.
 
@@ -28,7 +28,7 @@ The system is designed for applications such as **extended reality (XR), robotic
 
 ## Repository Overview
 
-![Overview over the software packages](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-general.png)
+![Overview over the software packages](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/software-general.png)
 
 ### `/app` - Main Application [(Readme.md)](/app)
 The main application, running on a host computer with a graphical user interface (GUI). It provides network communication, temporal marker synchronization, 3D triangulation, and rigid-body matching and tracking.
@@ -68,9 +68,9 @@ To build your own camera node, the following hardware components are required:
 
 #### 3D-Printed Enclosure
 
-The enclosure used in our setup is available as STL files for 3D printing (**Back cover:** [bottom.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/bottom.stl), **Front cover:** [top.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/top.stl), **IR filter mount:** [filter.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/utils/stl-files/filter.stl)):
+The enclosure used in our setup is available as STL files for 3D printing (**Back cover:** [bottom.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/utils/stl-files/bottom.stl), **Front cover:** [top.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/utils/stl-files/top.stl), **IR filter mount:** [filter.stl](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/utils/stl-files/filter.stl)):
 
-![Camera Case STL Files](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/stl-files2.png)
+![Camera Case STL Files](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/stl-files2.png)
 
 
 **Note:** The IR filter mount is currently attached to the enclosure using adhesive. The Raspberry Pi is secured using four M2 × 10 mm screws and nuts, while the camera is mounted using four M1.6 × 10 mm screws and nuts. To prevent the nuts from loosening over time, self-locking nuts or a suitable threadlocker can be used. Although the outer enclosure includes threaded screw holes, additional screws were not required, as the housing components fit snugly together. Depending on the dimensions of your IR filter, the mount may need to be adjusted. Our setup uses an IR filter measuring approximately 8 × 8 mm.

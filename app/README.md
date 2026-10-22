@@ -17,13 +17,13 @@ For Linux, please follow the build information below.
 
 `main.cpp` loads settings, initializes networking, creates the shared `DataModel`, starts the `ProcessorCollection`, and runs the `View` render loop. Processing runs in a separate thread from rendering.
 
-![Architecture Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-architecture.png)
+![Architecture Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/software-architecture.png)
 
 `DataModel` stores longer-lived objects, while `TickData` represents a single processing step. Processors typically implement the `Processor::process(TickData&)` interface.
 
 The **processors** data flow can be visualized as follows:
 
-![Processor Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-processors.png)
+![Processor Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/software-processors.png)
 
 
 ### Project structure
@@ -61,7 +61,7 @@ In the **Network** pane, select the network interface on which the application s
 
 In the **Rigid Bodies** pane, you can define and configure the rigid bodies that the system should detect and track. You can add or remove rigid bodies, rename them, and specify the positions of their markers.
 
-![Rigid Body Definition](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-rigidbody-menu.png)
+![Rigid Body Definition](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/main-rigidbody-menu.png)
 
 **Note:** By default, the rigid body definitions used in the ACM MIG '26 evaluation are loaded (*Hand Left*, *Hand Right*, and *Head*).
 
@@ -73,7 +73,7 @@ All definitions are stored in `settings.json`.
 
 The left sidebar allows you to configure the camera frame rate and the processing rate of the main application.
 
-![Pipeline Settings](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-pipeline-settings.png)
+![Pipeline Settings](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/main-pipeline-settings.png)
 
 - **Cam FPS:** Sets the target frame rate for the camera nodes. The cameras will attempt to maintain this frame rate. Although the Raspberry Pi Zero 2 W can achieve approximately 85 FPS, we recommend staying at or below 60 FPS unless additional cooling is provided.
 
@@ -93,11 +93,11 @@ In the upper left corner, you can choose between the 2D Camera images and the 3D
 
 **Camera View**
 
-![Camera View Screenshot](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-camera-views.jpg)
+![Camera View Screenshot](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/main-camera-views.jpg)
 
 **3D View**
 
-![3D View Screenshot](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-3D-view.jpg)
+![3D View Screenshot](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/main-3D-view.jpg)
 
 
 ### E. Calibration
@@ -134,7 +134,7 @@ Slower and smoother movements generally improve calibration accuracy by reducing
 
 Valid calibration paths, consisting of marker observations that can be matched between at least two cameras, are visualized directly in the corresponding camera windows.
 
-![Calibration Paths Good](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/main-calibration-paths.jpg)
+![Calibration Paths Good](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/main-calibration-paths.jpg)
 
 **3. Finalize Calibration**
 
@@ -155,7 +155,7 @@ After completion:
 
 ### F. Camera Settings
 
-![Camera Window](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/camera-window.png)
+![Camera Window](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/camera-window.png)
 
 The camera window provides several controls for adjusting marker detection and camera behavior. However, these controls are rather meant for debugging purposes, since the default configuration should work for most scenarios:
 
@@ -168,7 +168,7 @@ The camera window provides several controls for adjusting marker detection and c
 - **Raw Image (Checkbox):** Enables the transmission and display of raw camera images. This option should primarily be used for debugging, as transmitting images increases network traffic and may introduce additional latency. **Note:** Raw images are displayed immediately upon reception, whereas detected markers are processed with a delay. As a result, the displayed image and marker overlays may not be perfectly synchronized.
 
 
-![Camera SSH Settings](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/camera-ssh-settings.png)
+![Camera SSH Settings](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/camera-ssh-settings.png)
 
 The Network Pane provides an overview of all camera nodes detected within the same subnet. To discover available cameras, the Mocap Framework scans SSH ports across the subnet and attempts to authenticate using the default credentials. Successfully authenticated camera nodes are listed in the Network Pane, where they can be remotely managed via SSH.
 

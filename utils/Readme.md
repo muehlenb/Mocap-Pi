@@ -17,7 +17,7 @@ DummyMarkerSender --folder [PathToFolder]
 
 An **Unreal Engine 5.3** project for simulating and exporting motion capture data using configurable virtual cameras and marker trajectories. Cameras can be freely positioned and oriented, while markers can be attached to moving actors or skeletal bones. After capturing the markers in the virtual cameras, the exported data can be used by the **DummyMarkerSender** to play it in the Mocap-Pi main application. This enables rapid, low-cost prototyping and evaluation of different motion capture scenarios.
 
-![Unreal Data Capturer](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/ue5_mocapdatacapturer.jpg)
+![Unreal Data Capturer](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/ue5_mocapdatacapturer.jpg)
 
 ### Camera Configuration
 

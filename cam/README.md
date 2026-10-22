@@ -2,7 +2,7 @@
 
 This directory contains the **Mocap-Pi** camera application, designed for the Raspberry Pi Zero 2 W with the Raspberry Pi Camera Module 3 NoIR.
 
-![Camera Software Class Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/initial_release/img/software-camera.png)
+![Camera Software Class Overview](https://raw.githubusercontent.com/muehlenb/Mocap-Pi/main/img/software-camera.png)
 
 For the **main application**, **additional utilities**, and related publications, see the [repository root](https://github.com/muehlenb/Mocap-Pi).
 
