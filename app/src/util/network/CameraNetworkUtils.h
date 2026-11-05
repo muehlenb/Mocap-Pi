@@ -7,6 +7,18 @@
 #include <boost/asio.hpp>
 #include <boost/bind/bind.hpp>
 
+#include <algorithm>
+#include <future>
+#include <string>
+
+#ifndef _WIN32
+#include <arpa/inet.h>
+#include <ifaddrs.h>
+#include <net/if.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#endif
+
 #include <boost/asio/deadline_timer.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
@@ -141,19 +153,43 @@ struct CameraNetworkUtils {
     }
 
     static void scanNetworkInterfaces() {
+        std::vector<std::string> networkInterfaces;
+        networkInterfaces.push_back("127.0.0.1");
+        
+// could maybe use constexpr instead of preprocessor here?
+#ifdef _WIN32
         boost::asio::io_context io_context;
         boost::asio::ip::tcp::resolver resolver(io_context);
         boost::asio::ip::tcp::resolver::results_type endpoints = resolver.resolve(boost::asio::ip::host_name(), "");
-
-        std::vector<std::string> networkInterfaces;
-        networkInterfaces.push_back("127.0.0.1");
         for (auto it = endpoints.begin(); it != endpoints.end(); ++it) {
             boost::asio::ip::tcp::endpoint endpoint = *it;
             if (endpoint.address().is_v4()) {
                 networkInterfaces.push_back(endpoint.address().to_string());
             }
         }
+#else
+        if (ifaddrs* interfaces{}; getifaddrs(&interfaces) == 0) {
+            const std::unique_ptr<ifaddrs, decltype(&freeifaddrs)> guard{interfaces, &freeifaddrs};
 
+            for (const auto* iface = interfaces; iface != nullptr; iface = iface->ifa_next) {
+                if (iface->ifa_addr == nullptr || iface->ifa_addr->sa_family != AF_INET)
+                    continue;
+                if (!(iface->ifa_flags & IFF_UP) || (iface->ifa_flags & IFF_LOOPBACK))
+                    continue;
+
+                char address[INET_ADDRSTRLEN]{};
+                const auto* ipv4 = reinterpret_cast<const sockaddr_in*>(iface->ifa_addr);
+                if (inet_ntop(AF_INET, &ipv4->sin_addr, address, sizeof(address)) == nullptr)
+                    continue;
+
+                if (std::find(networkInterfaces.begin(), networkInterfaces.end(), std::string_view{address}) == networkInterfaces.end())
+                    networkInterfaces.emplace_back(address);
+            }
+        } else {
+            std::cerr << "only 127.0.0.1 offered\n";
+        }
+#endif
+ 
         availableNetworkInterfaces = networkInterfaces;
     }
 
