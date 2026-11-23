@@ -57,6 +57,10 @@ struct TickData {
     std::vector<Skeleton*> activeSkeletons;
 };
 
+enum class RigidBodyDefinitionMode {
+    ToolTipOrigin,
+    CentroidPCA
+};
 
 
 /**
@@ -100,7 +104,6 @@ struct DataModel {
      * This semaphore is used to block concurrent write access.
      */
     Semaphore semaphore;
-
     
     std::vector<Marker> getVisibleLabeledMarkers() {
         std::vector<Marker> visibleMarkers;
@@ -112,6 +115,10 @@ struct DataModel {
         return visibleMarkers;
     };
 
+
+    // Innerhalb von DataModel:
+    RigidBody* redefineRigidBody = nullptr;
+    RigidBodyDefinitionMode redefineRigidBodyMode = RigidBodyDefinitionMode::ToolTipOrigin;
 
     /**
      * Initializes the data model.

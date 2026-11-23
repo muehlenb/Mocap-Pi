@@ -550,12 +550,12 @@ public:
                 drawLine(position, zPos);
 
                 unlitColorShader->setUniform("color", Vec4f(i==0, i==1, i==2, 1.f));
-                unlitColorShader->setUniform("model", Mat4f::translation(position.x, position.y, position.z) * Mat4f::scale(0.04f));
+                unlitColorShader->setUniform("model", Mat4f::translation(position.x, position.y, position.z) * Mat4f::scale(0.005f));
                 sphereMesh->render();
 
                 for(RigidBodyMarker& m : rb.markers){
                     unlitColorShader->setUniform("color", Vec4f(1.f, 1.f, 1.f, 1.f));
-                    unlitColorShader->setUniform("model", pose * Mat4f::translation(m.position.x, m.position.y, m.position.z) * Mat4f::scale(0.03f));
+                    unlitColorShader->setUniform("model", pose * Mat4f::translation(m.position.x, m.position.y, m.position.z) * Mat4f::scale(0.005f));
                     sphereMesh->render();
                 }
             }
