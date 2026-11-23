@@ -136,7 +136,9 @@ inline void to_json(nlohmann::json& j, const CameraCalibration& cam) {
                        {"calib_reprojection_error", cam.calib_reprojection_error},
                        {"calib_distance_error", cam.calib_distance_error},
                        {"calib_observation_num", cam.calib_observation_num},
-                       {"unique_cam_id", cam.unique_cam_id}};
+                       {"unique_cam_id", cam.unique_cam_id},
+                       {"k", {cam.k[0], cam.k[1], cam.k[2]}},
+                       {"p", {cam.p[0], cam.p[1]}}};
 }
 
 inline void from_json(const nlohmann::json& j, CameraCalibration& cam) {
@@ -149,6 +151,8 @@ inline void from_json(const nlohmann::json& j, CameraCalibration& cam) {
         j.at("calib_distance_error").get_to(cam.calib_distance_error);
         j.at("calib_observation_num").get_to(cam.calib_observation_num);
         j.at("unique_cam_id").get_to(cam.unique_cam_id);
+        if(j.contains("k")) j.at("k").get_to<std::array<double, 3>>(*reinterpret_cast<std::array<double, 3>*>(cam.k));
+        if(j.contains("p")) j.at("p").get_to<std::array<double, 2>>(*reinterpret_cast<std::array<double, 2>*>(cam.p));
     } catch(std::exception e){
         std::cerr << e.what() << std::endl;
     }

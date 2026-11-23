@@ -75,9 +75,8 @@ public:
         T y_distorted = yn * (T(1.0) + k[0]*r2 + k[1]*r2*r2 + k[2]*r2*r2*r2)
                         + p[0]*(r2 + T(2.0)*yn*yn) + T(2.0)*p[1]*xn*yn;
 
-        // Applying distortion:
-        T u = xn * focal_length[0] + principal_point[0];
-        T v = yn * focal_length[1] + principal_point[1];
+        T u = x_distorted * focal_length[0] + principal_point[0];
+        T v = y_distorted * focal_length[1] + principal_point[1];
 
         // The error is the difference between the predicted and observed position.
         residuals[0] = u - T(observed_x);

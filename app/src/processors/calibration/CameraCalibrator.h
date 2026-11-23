@@ -59,8 +59,8 @@ class CameraCalibrator : public Processor {
 
     void resetCalibrations();
     void createInitialGuess();
-    void refineExtrinsicGuess();
-    void refineExtrinsicIntrinsics();
+    ceres::Solver::Summary refineExtrinsicGuess();
+    ceres::Solver::Summary refineExtrinsicIntrinsics();
 
     void groundTruthRegistration();
 
@@ -79,7 +79,7 @@ public:
     // Optimized 3D points:
     std::vector<Vec4d> points3D;
 
-    bool registerWithGroundTruth = true;
+    bool registerWithGroundTruth = false;
 
     CameraCalibrator(DataModel& model)
         : Processor(model){
@@ -121,7 +121,12 @@ public:
     }
 
     void startObservationCollection(){
-        savedCamerasWhileCalib = calibrations;
+        savedCamerasWhileCalib.clear();
+        for(auto& camera : model.cameras){
+            CameraCalibration saved = camera.second.calibration;
+            saved.unique_cam_id = camera.first;
+            savedCamerasWhileCalib.push_back(saved);
+        }
         clearObservations();
         isCollectingObservations = true;
     }

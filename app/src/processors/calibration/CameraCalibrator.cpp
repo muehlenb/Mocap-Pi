@@ -16,7 +16,7 @@
 
 #include "CeresCostFunctions.h"
 
-int CalibrationSticks::selectedCalibStick = 0;
+int CalibrationSticks::selectedCalibStick = 1; // [1] = 25 cm
 unsigned int CalibrationSticks::calibrationStickNum = 2;
 const char* CalibrationSticks::calibrationStickNames[] = {"30cm Simulation-Stick", "25cm Optitrack-Stick"};
 const std::tuple<float, float> CalibrationSticks::calibrationStickLengths[] = {
@@ -98,6 +98,8 @@ void CameraCalibrator::loadCalibration(){
 
                 model.cameras[calibration.unique_cam_id].calibration = calibration;
             }
+        calibrations = calibs;
+        input_file.close();
         }
     } catch (nlohmann::json::parse_error& e) {
         std::cout << e.what() << std::endl;
@@ -136,6 +138,9 @@ void CameraCalibrator::addObservation(std::vector<CameraFrame>& frames, std::vec
         return;
 
     bool hasObservation = false;
+    // A sample counts only when at least 2 cameras accept it
+    std::vector<std::pair<int, std::pair<int, ImageMarker>>> acceptedObservations;
+    int acceptedCameras = 0;
     for(unsigned int i = 0; i < frames.size(); ++i){
         CameraFrame& frame = frames[i];
 
@@ -211,11 +216,17 @@ void CameraCalibrator::addObservation(std::vector<CameraFrame>& frames, std::vec
                 continue;
             }
 
-            observations[frame.uniqueCamID].push_back(std::pair<int, ImageMarker>(currentPointId, orderedV1));
-            observations[frame.uniqueCamID].push_back(std::pair<int, ImageMarker>(currentPointId + 1, orderedV2));
-            observations[frame.uniqueCamID].push_back(std::pair<int, ImageMarker>(currentPointId + 2, orderedV3));
-            hasObservation = true;
+            acceptedObservations.push_back({frame.uniqueCamID, std::pair<int, ImageMarker>(currentPointId, orderedV1)});
+            acceptedObservations.push_back({frame.uniqueCamID, std::pair<int, ImageMarker>(currentPointId + 1, orderedV2)});
+            acceptedObservations.push_back({frame.uniqueCamID, std::pair<int, ImageMarker>(currentPointId + 2, orderedV3)});
+            ++acceptedCameras;
         }
+    }
+
+    if(acceptedCameras >= 2){
+        for(auto& accepted : acceptedObservations)
+            observations[accepted.first].push_back(accepted.second);
+        hasObservation = true;
     }
 
     if(hasObservation){
@@ -262,7 +273,7 @@ Vec4f CameraCalibrator::guess3DPoint(ImageMarker raw2D){
     float weltProPixelY = 2.0f * tan(halberVFOV) / 720.f;
 
     // Umrechnung der Pixelkoordinaten in 3D-Weltkoordinaten
-    float x = ((raw2D.x) - 1280.f / 2.0f) * weltProPixelX * z;
+    float x = (1280.f / 2.0f - (raw2D.x)) * weltProPixelX * z;
     float y = (720.f / 2.0f - (raw2D.y)) * weltProPixelY * z;
 
     return Vec4f(x, y, z);
@@ -329,7 +340,7 @@ void CameraCalibrator::createInitialGuess(){
             pcl::registration::TransformationEstimationSVD<pcl::PointXYZ, pcl::PointXYZ>::Matrix4 mat;
             estimator.estimateRigidTransformation(*sourcePC, *targetPC, mat);
 
-            Mat4f myMat = Mat4f::fromEigen(mat).inverse();
+            Mat4f myMat = Mat4f::fromEigen(mat);
 
             float* mData = myMat.data;
 
@@ -428,7 +439,28 @@ void CameraCalibrator::filterMeasurement(){
 }
 
 
-void CameraCalibrator::refineExtrinsicGuess(){
+static void setLinearSolver(ceres::Solver::Options& options, bool exact){
+    if(exact && ceres::IsSparseLinearAlgebraLibraryTypeAvailable(ceres::SUITE_SPARSE)){
+        options.linear_solver_type = ceres::SPARSE_SCHUR;
+        options.sparse_linear_algebra_library_type = ceres::SUITE_SPARSE;
+    } else if(exact && ceres::IsSparseLinearAlgebraLibraryTypeAvailable(ceres::EIGEN_SPARSE)){
+        options.linear_solver_type = ceres::SPARSE_SCHUR;
+        options.sparse_linear_algebra_library_type = ceres::EIGEN_SPARSE;
+    } else {
+        options.linear_solver_type = ceres::ITERATIVE_SCHUR;
+        options.preconditioner_type = ceres::SCHUR_JACOBI;
+    }
+}
+
+static void retryIfSparseFailed(ceres::Solver::Options& options, ceres::Problem& problem, ceres::Solver::Summary& summary){
+    if(summary.IsSolutionUsable() || options.linear_solver_type != ceres::SPARSE_SCHUR)
+        return;
+    std::cout << "SPARSE_SCHUR stopped (" << summary.message << "), fitting again with ITERATIVE_SCHUR." << std::endl; //fallback
+    setLinearSolver(options, false);
+    ceres::Solve(options, &problem, &summary);
+}
+
+ceres::Solver::Summary CameraCalibrator::refineExtrinsicGuess(){
     ceres::Problem problem;
 
     for (unsigned int i = 0; i < calibrations.size(); ++i) {
@@ -466,20 +498,21 @@ void CameraCalibrator::refineExtrinsicGuess(){
 
     // Konfigurieren und starten Sie den Solver.
     ceres::Solver::Options options;
-    options.linear_solver_type = ceres::SPARSE_SCHUR;
+    setLinearSolver(options, true);
     options.minimizer_progress_to_stdout = true;
     options.max_num_iterations = 100;
     options.update_state_every_iteration = true;
-    options.sparse_linear_algebra_library_type = ceres::SUITE_SPARSE;
     options.function_tolerance = 1e-8;
     options.gradient_tolerance = 1e-10;
     options.parameter_tolerance = 1e-8;
 
     ceres::Solver::Summary summary;
     ceres::Solve(options, &problem, &summary);
+    retryIfSparseFailed(options, problem, summary);
+    return summary;
 }
 
-void CameraCalibrator::refineExtrinsicIntrinsics(){
+ceres::Solver::Summary CameraCalibrator::refineExtrinsicIntrinsics(){
     //std::cout << "Start calibration... " << "\n";
     // Erstellen Sie das Problem.
     ceres::Problem problem;
@@ -544,9 +577,8 @@ void CameraCalibrator::refineExtrinsicIntrinsics(){
 
     // Konfigurieren und starten Sie den Solver.
     ceres::Solver::Options options;
-    options.linear_solver_type = ceres::SPARSE_SCHUR;
+    setLinearSolver(options, true);
     options.trust_region_strategy_type = ceres::LEVENBERG_MARQUARDT;
-    options.sparse_linear_algebra_library_type = ceres::SUITE_SPARSE;
     options.minimizer_progress_to_stdout = true;
     options.max_num_iterations = 500;
     options.update_state_every_iteration = true;
@@ -558,8 +590,10 @@ void CameraCalibrator::refineExtrinsicIntrinsics(){
 
     ceres::Solver::Summary summary;
     ceres::Solve(options, &problem, &summary);
+    retryIfSparseFailed(options, problem, summary);
 
     std::cout << summary.FullReport() << "\n";
+    return summary;
 }
 
 void CameraCalibrator::calibrate(){
@@ -568,8 +602,15 @@ void CameraCalibrator::calibrate(){
 
     resetCalibrations();
     createInitialGuess();
-    refineExtrinsicGuess();
-    refineExtrinsicIntrinsics();
+    ceres::Solver::Summary extrinsicSummary = refineExtrinsicGuess();
+    ceres::Solver::Summary fullSummary = refineExtrinsicIntrinsics();
+
+    if(!extrinsicSummary.IsSolutionUsable() || !fullSummary.IsSolutionUsable()){
+        std::cout << "CALIBRATION FAILED, calibration.json was not changed. Restart the host to load it again." << std::endl;
+        std::cout << "  Extrinsic fit: " << ceres::TerminationTypeToString(extrinsicSummary.termination_type) << ", " << extrinsicSummary.message << std::endl;
+        std::cout << "  Full fit: " << ceres::TerminationTypeToString(fullSummary.termination_type) << ", " << fullSummary.message << std::endl;
+        return;
+    }
 
     for(int i=0; i < points3D.size() / 3; ++i){
         Vec4d p1 = points3D[i*3];
@@ -609,9 +650,15 @@ void CameraCalibrator::calibrate(){
         ++sumCount;
     }
 
+    // verbose
     std::cout << "Dist: " << (sumDist / sumCount) << std::endl;
+    std::cout << "Extrinsic fit (" << ceres::LinearSolverTypeToString(extrinsicSummary.linear_solver_type_used) << "): "
+              << extrinsicSummary.BriefReport() << std::endl;
+    std::cout << "Full fit (" << ceres::LinearSolverTypeToString(fullSummary.linear_solver_type_used) << "): "
+              << fullSummary.BriefReport() << std::endl;
 
     calculateStatistics();
-    groundTruthRegistration();
+    if(registerWithGroundTruth)
+        groundTruthRegistration();
     saveCalibration();
 }
