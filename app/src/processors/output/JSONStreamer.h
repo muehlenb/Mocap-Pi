@@ -233,6 +233,5 @@ private:
             out << '}';
             send(out.str());
         }
-        std::cout << "SEND!!" << std::endl;
     }
 };

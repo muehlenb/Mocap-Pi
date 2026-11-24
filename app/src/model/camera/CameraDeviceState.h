@@ -75,7 +75,7 @@ struct CameraDeviceState {
      *
      * Note: This value is sent repeatedly to the camera to update it on change.
      */
-    int requestedBrightnessThreshold = 80;
+    int requestedBrightnessThreshold = 50;
 
     /**
      * Requested exposure time.
