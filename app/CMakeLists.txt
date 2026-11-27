@@ -100,11 +100,15 @@ set(HEADERS
     src/processors/calibration/CameraCalibrator.h
     src/processors/input/CameraDataProvider.h
     src/processors/input/TickProvider.h
+
+    src/processors/output/JSONStreamer.h
+
     src/processors/marker/MarkerPersistor.h
     src/processors/marker/MarkerLogger.h
     src/processors/marker/RawMarkerTriangulator.h
     src/processors/rigid/RigidBodyDetector.h
     src/processors/rigid/GroundTruthEvaluator.h
+    src/processors/rigid/RigidBodyDefiner.h
     src/processors/skeleton/SkeletalFitter.h
 
     # View:

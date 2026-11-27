@@ -10,10 +10,13 @@ ProcessorCollection::ProcessorCollection(DataModel& model)
     cameraDataProvider = std::make_shared<CameraDataProvider>(model);
     markerTriangulator = std::make_shared<RawMarkerTriangulator>(model);
     markerPersistor = std::make_shared<MarkerPersistor>(model);
+    rigidBodyDefiner = std::make_shared<RigidBodyDefiner>(model);
     rigidBodyDetector = std::make_shared<RigidBodyDetector>(model);
     groundTruthEvaluator = std::make_shared<GroundTruthEvaluator>(model);
     markerLogger = std::make_shared<MarkerLogger>(model);
     skeletalFitter = std::make_shared<SkeletalFitter>(model);
+
+    jsonStreamer = std::make_shared<JSONStreamer>(model);
 
     // Processes the next marker pakets when available in a separate thread
     // (so that the udp receiving thread doesn't have to wait):
@@ -65,6 +68,11 @@ ProcessorCollection::ProcessorCollection(DataModel& model)
             markerPersistor->process(tick);
             endTimeMeasure("Marker Labeling");
 
+            // Rigid Body Definer:
+            startTimeMeasure("Rigid Body Definer");
+            rigidBodyDefiner->process(tick);
+            endTimeMeasure("Rigid Body Definer");
+
             // Rigid Body Detector:
             startTimeMeasure("Rigid Body Detector");
             rigidBodyDetector->process(tick);
@@ -76,6 +84,10 @@ ProcessorCollection::ProcessorCollection(DataModel& model)
             startTimeMeasure("Skeletal Fitter");
             skeletalFitter->process(tick);
             endTimeMeasure("Skeletal Fitter");
+
+            startTimeMeasure("JSON Streamer");
+            jsonStreamer->process(tick);
+            endTimeMeasure("JSON Streamer");
 
             // Update the current model:
             model.lastTick = tick;

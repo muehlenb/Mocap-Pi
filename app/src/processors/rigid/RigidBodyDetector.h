@@ -31,7 +31,7 @@ public:
     // Final pose acceptance criteria.
     int minimumInliers = 4;
     float maximumRms = 0.01f;
-    float minimumSecondEigenvalueRatio = 0.01f;
+    float minimumSecondEigenvalueRatio = 0.001f;
 
     int minimumTrackingInliers = 3;
 
@@ -533,6 +533,10 @@ private:
     }
 
     void updateBody(RigidBody* rb, std::vector<bool>& usedCandidates) {
+        if(model.redefineRigidBody == rb){
+            invalidateRigidBody(rb);
+        }
+
         std::vector<int> candidates;
         candidates.reserve(model.markers.size());
 
@@ -596,6 +600,16 @@ public:
         tripletCache.erase(rb);
         states.erase(rb);
     }
+
+
+
+
+
+
+
+
+
+
 
     void process(TickData& tick) override {
         ++frameNumber;

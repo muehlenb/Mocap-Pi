@@ -10,10 +10,13 @@
 #include "src/processors/input/TickProvider.h"
 #include "src/processors/marker/RawMarkerTriangulator.h"
 #include "src/processors/marker/MarkerPersistor.h"
+#include "src/processors/rigid/RigidBodyDefiner.h"
 #include "src/processors/rigid/RigidBodyDetector.h"
 #include "src/processors/rigid/GroundTruthEvaluator.h"
 #include "src/processors/marker/MarkerLogger.h"
 #include "src/processors/skeleton/SkeletalFitter.h"
+
+#include "src/processors/output/JSONStreamer.h"
 
 using namespace std::chrono;
 
@@ -46,6 +49,11 @@ struct ProcessorCollection {
     std::shared_ptr<MarkerPersistor> markerPersistor;
 
     /**
+     *
+     */
+    std::shared_ptr<RigidBodyDefiner> rigidBodyDefiner;
+
+    /**
      * Detects a rigid body from a cloud of markers using a simple brute force approach
      */
     std::shared_ptr<RigidBodyDetector> rigidBodyDetector;
@@ -56,6 +64,8 @@ struct ProcessorCollection {
      * Fits skeletons into the found markers.
      */
     std::shared_ptr<SkeletalFitter> skeletalFitter;
+
+    std::shared_ptr<JSONStreamer> jsonStreamer;
 
     /**
      * The processing rate (ticks per second) at which the pipeline should run.
